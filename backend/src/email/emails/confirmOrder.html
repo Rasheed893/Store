@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Confirmation</title>
+    <style>
+      body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        padding: 40px;
+      }
+      .container {
+        background-color: white;
+        border-radius: 8px;
+        margin: auto;
+        padding: 48px;
+        max-width: 600px;
+      }
+      .heading {
+        font-size: 24px;
+        font-weight: normal;
+        color: #333333;
+        text-align: center;
+        margin: 0 0 24px;
+      }
+      .text {
+        font-size: 16px;
+        color: #666666;
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .section {
+        background-color: #f9f9f9;
+        padding: 24px;
+        border-radius: 8px;
+        margin-bottom: 32px;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .row .column {
+        flex: 1;
+      }
+      .text-right {
+        text-align: right;
+      }
+      .button {
+        display: inline-block;
+        background-color: #333333;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: medium;
+        text-decoration: none;
+      }
+      .footer-text {
+        font-size: 12px;
+        color: #999999;
+        text-align: center;
+        margin: 0;
+      }
+    </style>
+    <script>
+      console.log("Invoice page loaded");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("DOM fully loaded and parsed");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">Invoice Confirmation</h1>
+      <p class="text">Thank you for your purchase. Your invoice is ready.</p>
+
+      <div class="section">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/online-store-ca4c8.firebasestorage.app/o/items%2FRFS.png?alt=media&token=0380936e-68e6-4a2c-ba8a-fbcd85483717"
+          alt="RFS Logo"
+          style="
+            display: block;
+            margin: 0 auto;
+            height: 48px;
+            width: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid black;
+          "
+        />
+        <p><strong>Order Number:</strong> {{orderId}}</p>
+        <p><strong>Payment Number:</strong> {{paymentId}}</p>
+        <!-- <p><strong>Order Date:</strong> {{date}}</p> -->
+      </div>
+
+      <h2 class="heading">Order Summary</h2>
+      <hr />
+      {{products}}
+      <hr />
+
+      <div class="row">
+        <div class="column">Subtotal</div>
+        <div class="column text-right">{{subtotal}}</div>
+      </div>
+      <div class="row">
+        <div class="column">Additional discount</div>
+        <div class="column text-right">{{discount}}</div>
+      </div>
+      <div class="row">
+        <div class="column">VAT (5%)</div>
+        <div class="column text-right">{{vat}}</div>
+      </div>
+      <div class="row">
+        <div class="column">Shipping To {{city}}</div>
+        <div class="column text-right">{{shipping}}</div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="column"><strong>Total</strong></div>
+        <div class="column text-right"><strong>{{totalPrice}}</strong></div>
+      </div>
+
+      <div class="text-center" style="text-align: center; margin: 32px 0">
+        <a
+          class="button"
+          href="{{invoiceUrl}}"
+          download
+          onclick="console.log('Download Invoice clicked')"
+          >Download Invoice</a
+        >
+      </div>
+
+      <p class="text">
+        If you have any questions about your order, please contact our customer
+        service at <a href="mailto:support@example.com">support@example.com</a>.
+      </p>
+      <hr />
+      <p class="footer-text">Nordic Home Goods LLC</p>
+      <p class="footer-text">123 Scandinavian Way, Ajman, UAE</p>
+      <p class="footer-text">© 2025 Nordic Home Goods. All rights reserved.</p>
+      <p class="footer-text">
+        <a href="https://example.com/unsubscribe" class="footer-text"
+          >Unsubscribe</a
+        >
+      </p>
+    </div>
+  </body>
+</html>
