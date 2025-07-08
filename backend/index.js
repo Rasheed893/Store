@@ -10,13 +10,13 @@ const cors = require("cors");
 require("dotenv").config();
 
 const port = process.env.PORT || 5000;
-
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 // Middleware
 app.use(express.json());
 app.use(cookieParser()); // Middleware to read HTTP-only cookies
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
@@ -78,12 +78,13 @@ app.use("/api/shipping-rate", shippingRate);
 app.use("/api/promo", promoCode);
 
 // eSd46z75rnuAJKEJ - password
+
+app.get("/", (req, res) => {
+  res.send({ message: "Hello from the server!" });
+});
+
 async function main() {
   await mongoose.connect(process.env.DB_URL);
-
-  app.use("/", (req, res) => {
-    res.send({ message: "Hello from the server!" });
-  });
 }
 
 main()
