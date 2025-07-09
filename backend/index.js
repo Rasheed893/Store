@@ -17,10 +17,17 @@ app.use(express.json());
 app.use(cookieParser()); // Middleware to read HTTP-only cookies
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+console.log(allowedOrigins);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
