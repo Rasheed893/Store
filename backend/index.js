@@ -41,6 +41,15 @@ app.use(
         "https://*.stripe.com",
         "https://apis.google.com",
       ],
+      scriptSrcElem: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://js.stripe.com",
+        "https://m.stripe.network",
+        "https://b.stripecdn.com",
+        "https://*.stripe.com",
+        "https://apis.google.com",
+      ],
       frameSrc: [
         "'self'",
         "https://js.stripe.com",
@@ -52,7 +61,6 @@ app.use(
         "'self'",
         "https://frontend-delta-gules-16.vercel.app",
         "https://store-production-39af.up.railway.app",
-        // "http://localhost:5000",
         "https://api.stripe.com",
         "https://m.stripe.com",
       ],
