@@ -10,7 +10,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 const port = process.env.PORT || 5000;
-const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
+const allowedOrigins = process.env.CORS_ORIGIN;
+// const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 // Middleware
 app.use(express.json());
 app.use(cookieParser()); // Middleware to read HTTP-only cookies
