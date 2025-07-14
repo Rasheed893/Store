@@ -175,4 +175,47 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET /api/top-sellers
+router.get("/top-sellers", async (req, res) => {
+  try {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const topSellers = await Order.aggregate([
+      { $match: { createdAt: { $gte: start, $lt: end } } },
+      { $unwind: "$products" },
+      {
+        $group: {
+          _id: "$products.productIds",
+          totalQty: { $sum: "$products.quantity" },
+        },
+      },
+      { $sort: { totalQty: -1 } },
+      { $limit: 12 },
+      {
+        $lookup: {
+          from: "items", // collection name in lowercase
+          localField: "_id",
+          foreignField: "_id",
+          as: "item",
+        },
+      },
+      { $unwind: "$item" },
+      {
+        $replaceRoot: {
+          newRoot: {
+            $mergeObjects: ["$item", { purchasesThisMonth: "$totalQty" }],
+          },
+        },
+      },
+    ]);
+
+    res.status(200).json(topSellers);
+  } catch (error) {
+    console.error("Failed to fetch top sellers", error);
+    res.status(500).json({ message: "Server error fetching top sellers" });
+  }
+});
+
 module.exports = router;
