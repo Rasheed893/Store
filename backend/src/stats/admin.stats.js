@@ -186,10 +186,13 @@ router.get("/top-sellers", async (req, res) => {
       { $match: { createdAt: { $gte: start, $lt: end } } },
       { $unwind: "$products" },
       {
+        $match: {
+          "products.productIds": { $exists: true, $ne: null }, // ✅ filter out undefined/null
+        },
+      },
+      {
         $group: {
-          _id: {
-            $toObjectId: "$products.productIds",
-          },
+          _id: { $toObjectId: "$products.productIds" }, // ✅ safe now
           totalQty: { $sum: "$products.quantity" },
         },
       },
@@ -197,7 +200,7 @@ router.get("/top-sellers", async (req, res) => {
       { $limit: 12 },
       {
         $lookup: {
-          from: "items", // collection name in lowercase
+          from: "items",
           localField: "_id",
           foreignField: "_id",
           as: "item",
