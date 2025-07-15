@@ -8,6 +8,7 @@ const {
   getOrderByCustomerId,
   deleteOrder,
   getInvoiceUrl,
+  getRecommendedItems,
 } = require("./order.controller");
 
 // Add new order
@@ -28,5 +29,8 @@ router.get("/customer/:customerId", getOrderByCustomerId);
 
 // Download Invoice URL
 router.get("/invoice-url/:orderId", getInvoiceUrl);
+
+// Get recommended items
+router.get("/recommended/:email", getRecommendedItems);
 
 module.exports = router;
