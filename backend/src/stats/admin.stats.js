@@ -187,7 +187,9 @@ router.get("/top-sellers", async (req, res) => {
       { $unwind: "$products" },
       {
         $group: {
-          _id: "$products.productIds",
+          _id: {
+            $toObjectId: "$products.productIds",
+          },
           totalQty: { $sum: "$products.quantity" },
         },
       },
