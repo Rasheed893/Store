@@ -210,7 +210,13 @@ router.get("/top-sellers", async (req, res) => {
       {
         $replaceRoot: {
           newRoot: {
-            $mergeObjects: ["$item", { purchasesThisMonth: "$totalQty" }],
+            $mergeObjects: [
+              "$item",
+              {
+                purchasesThisMonth: "$totalQty",
+                id: { $toString: "$_id" }, // ✅ inject `id` field for frontend
+              },
+            ],
           },
         },
       },
