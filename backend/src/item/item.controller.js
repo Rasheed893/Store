@@ -2,6 +2,7 @@ const Item = require("./item.model");
 // const bucket = require("../firebase/config");
 const { moduel } = require("mongoose");
 const Customer = require("../customer/customer.model");
+const Order = require("../orders/order.model");
 // const { trace } = require("./item.route");
 
 // Post an Item
