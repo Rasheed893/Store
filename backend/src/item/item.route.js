@@ -11,6 +11,7 @@ const {
   updateStock,
   searchItem,
   addTating,
+  getRecommendedItems,
 } = require("./item.controller");
 const verifyAdminToken = require("../middleware/verifyAdmenToken");
 const router = express.Router();
@@ -41,5 +42,8 @@ router.post("/updateStock", updateStock);
 
 // Add rating
 router.post("/:id/rate", addTating);
+
+// Get recommended items
+router.get("/recommended/:email", getRecommendedItems);
 
 module.exports = router;

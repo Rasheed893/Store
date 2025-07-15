@@ -191,6 +191,49 @@ const addTating = async (req, res) => {
   }
 };
 
+// Get recommended items
+const getRecommendedItems = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    // Step 1: Find customer by email
+    const customer = await Customer.findOne({ email });
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    // Step 2: Get all orders of this customer
+    const orders = await Order.find({ customer: customer._id });
+
+    // Step 3: Collect all purchased productIds
+    const productIdSet = new Set();
+    orders.forEach((order) => {
+      order.products.forEach((p) => {
+        productIdSet.add(p.productIds.toString());
+      });
+    });
+
+    // Step 4: Get all item categories for those products
+    const purchasedItems = await Item.find({
+      _id: { $in: Array.from(productIdSet) },
+    });
+    const purchasedCategories = [
+      ...new Set(purchasedItems.map((item) => item.category)),
+    ];
+
+    // Step 5: Find other items in same categories (exclude already ordered)
+    const recommendedItems = await Item.find({
+      category: { $in: purchasedCategories },
+      _id: { $nin: Array.from(productIdSet) },
+    }).limit(20);
+
+    res.status(200).json({ recommended: recommendedItems });
+  } catch (error) {
+    console.error("Error fetching recommended items:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
 module.exports = {
   postItem,
   getAllItem,
@@ -201,4 +244,5 @@ module.exports = {
   updateStock,
   searchItem,
   addTating,
+  getRecommendedItems,
 };
