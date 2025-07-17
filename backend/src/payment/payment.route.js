@@ -27,4 +27,31 @@ router.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+// Server-side code (Node.js)
+router.post("/check-payment-status", async (req, res) => {
+  const { paymentIntentId } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    // Handle different status values securely on server
+    switch (paymentIntent.status) {
+      case "succeeded":
+        // Payment complete
+        break;
+      case "requires_action":
+        // Additional authentication needed
+        break;
+      case "requires_payment_method":
+        // Previous attempt failed
+        break;
+    }
+    // Return only necessary information to client
+    res.json({ status: paymentIntent.status });
+  } catch (error) {
+    // Handle errors securely
+    console.error("Error:", error);
+    res.status(500).json({ error: "Payment verification failed" });
+  }
+});
+
 module.exports = router;
