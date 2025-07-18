@@ -44,9 +44,7 @@ app.use(
         "https://*.stripe.com",
         "https://apis.google.com",
         "https://maps.googleapis.com",
-        "'sha256-ZKAzolY8ZkchL+PxZ9r0D7ZnhcJlSDJJwRyEIiWadzI='",
-        "'sha256-5DA+a07wxWmEka9IdoWjSPVHb17Cp5284/lJzfbl8KA='",
-        "'sha256-/5Guo2nzv5n/w6ukZpOBZOtTJBJPSkJ6mhHpnBgm3Ls='",
+        ...(process.env.NODE_ENV === "production" ? [] : ["'unsafe-inline'"]),
       ],
       scriptSrcElem: [
         "'self'",
