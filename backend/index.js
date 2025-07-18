@@ -27,8 +27,7 @@ app.use(
     credentials: true,
   })
 );
-// app.use(nonceMiddleware);
-
+console.log(allowedOrigins);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -44,7 +43,6 @@ app.use(
         "https://*.stripe.com",
         "https://apis.google.com",
         "https://maps.googleapis.com",
-        ...(process.env.NODE_ENV === "production" ? [] : ["'unsafe-inline'"]),
       ],
       scriptSrcElem: [
         "'self'",
@@ -77,12 +75,7 @@ app.use(
       ],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: [
-        "'self'",
-        "data:",
-        "https://*.stripe.com",
-        "https://maps.googleapis.com",
-      ],
+      imgSrc: ["'self'", "data:", "https://*.stripe.com"],
     },
   })
 );
@@ -98,7 +91,6 @@ const spinnerRoute = require("./src/spinner/spinner.router");
 const paymentsRoute = require("./src/payment/payment.route");
 const shippingRate = require("./src/shipping/shippingRate.route");
 const promoCode = require("./src/promoCode/promoCode.router");
-// const nonceMiddleware = require("./src/middleware/nonceMiddleware");
 
 app.use("/api/items", itemRoute);
 app.use("/api/orders", orderRoute);
