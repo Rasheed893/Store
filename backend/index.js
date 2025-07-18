@@ -43,6 +43,9 @@ app.use(
         "https://*.stripe.com",
         "https://apis.google.com",
         "https://maps.googleapis.com",
+        "https://*.firebase.com",
+        "https://*.firebaseio.com",
+        "https://*.firebaseapp.com",
       ],
       scriptSrcElem: [
         "'self'",
@@ -62,6 +65,7 @@ app.use(
         "https://*.stripe.com",
         "https://checkout.stripe.com",
         "https://connect-js.stripe.com",
+        "https://*.firebaseapp.com",
       ],
       connectSrc: [
         "'self'",
@@ -72,10 +76,13 @@ app.use(
         "https://r.stripe.com",
         "https://maps.googleapis.com",
         "https://checkout.stripe.com",
+        "https://*.firebase.com",
+        "https://*.firebaseio.com",
+        "https://*.firebaseapp.com",
       ],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https://*.stripe.com"],
+      fontSrc: ["'self'", "https", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https", "https://*.stripe.com"],
     },
   })
 );
